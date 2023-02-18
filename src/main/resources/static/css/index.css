@@ -1,0 +1,16 @@
+.top {
+    width: 100%;
+    top: 15px;
+    margin: 0 0 5px 0;
+}
+.search{
+    width: 100%;
+    top: 15px;
+    margin: 0 0 5px 0;
+}
+.map {
+    color: blue;
+    margin-top: 0px;
+    height: 700px;
+    width: 100%;
+}
