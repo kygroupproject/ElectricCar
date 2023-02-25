@@ -49,6 +49,9 @@
         // });
 
 
+
+
+
         $.get("http://localhost:5556/api/data", function (data) {
             // 데이터에서 좌표 값을 가지고 마커를 표시합니다
             // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
@@ -62,22 +65,47 @@
 
                 // 인포윈도우를 생성합니다
                 var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="padding:5px; color:black;">' + chargespot.csNm + '</div>',
+                    // content: '<div style="padding:5px; color:black;border: solid; border-radius:23px; text-align:center;"><div>' + chargespot.csNm + '</div> <div>aaa</div><div>',
+                    content: '<div class="infocssreset"><span style="display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span><div style="display: block;background: #ffffff;color: #000000;text-align: left;height: 100px;line-height:22px;border-radius:4px;padding:0px 10px;">asas<div id="roadview"></div></div></div>',
                     removable: true // 닫기 버튼 추가
+
                 });
 
                 // 마커와 인포윈도우를 연결합니다
                 kakao.maps.event.addListener(marker, 'click', function () {
+
+                    //인포윈도우 실행
                     infowindow.open(map, marker);
+                    setInfoWindowStyle();
+                });
+                // 마커가 아닌 곳 클릭 시 인포윈도우 닫기
+                kakao.maps.event.addListener(map, 'click', function () {
+                    infowindow.close();
                 });
 
                 return marker;
             });
 
+
             // 클러스터러에 마커들을 추가합니다
             clusterer.addMarkers(markers);
-        });
 
+        });
+        //기본 INFOWINDOW 스타일 수정 
+        function setInfoWindowStyle() {
+            var infoTitle = document.querySelectorAll('.infocssreset');
+            infoTitle.forEach(function (e) {
+                let w = 300;
+                var ml = w / 2;
+                e.parentElement.style.bottom = "50px";
+                e.parentElement.style.left = "50%";
+                e.parentElement.style.marginLeft = -ml + "px";
+                e.parentElement.style.width = w + "px";
+                e.parentElement.previousSibling.style.display = "none";
+                e.parentElement.parentElement.style.border = "0px";
+                e.parentElement.parentElement.style.background = "unset";
+            });
+        }
 
     </script>
 
