@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <nav></nav>
     <div class="top">전기차 충전소 알림이</div>
     <div class="search">검색</div>
     <div id="map" class="map">s</div>
@@ -66,7 +67,7 @@
                 // 인포윈도우를 생성합니다
                 var infowindow = new kakao.maps.InfoWindow({
                     // content: '<div style="padding:5px; color:black;border: solid; border-radius:23px; text-align:center;"><div>' + chargespot.csNm + '</div> <div>aaa</div><div>',
-                    content: '<div class="infocssreset"><span style="display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span><div style="display: block;background: #ffffff;color: #000000;text-align: left;height: 100px;line-height:22px;border-radius:4px;padding:0px 10px;">asas<div id="roadview"></div></div></div>',
+                    content: '<div class="infocssreset"><span style="display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span></div></div>',
                     removable: true // 닫기 버튼 추가
 
                 });
@@ -77,6 +78,7 @@
                     //인포윈도우 실행
                     infowindow.open(map, marker);
                     setInfoWindowStyle();
+
                 });
                 // 마커가 아닌 곳 클릭 시 인포윈도우 닫기
                 kakao.maps.event.addListener(map, 'click', function () {
@@ -95,7 +97,7 @@
         function setInfoWindowStyle() {
             var infoTitle = document.querySelectorAll('.infocssreset');
             infoTitle.forEach(function (e) {
-                let w = 300;
+                let w = 200;
                 var ml = w / 2;
                 e.parentElement.style.bottom = "50px";
                 e.parentElement.style.left = "50%";
