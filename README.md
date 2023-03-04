@@ -1,3 +1,4 @@
 # ElectricCar
 # 작업진행중
-![image](https://user-images.githubusercontent.com/84373336/221371436-cfa5f275-772d-40e6-a226-6309a2b1ac3e.png)
+![git222](https://user-images.githubusercontent.com/84373336/222906009-ee9a7849-8e04-45f3-bfe6-47f126abd04c.png)
+
