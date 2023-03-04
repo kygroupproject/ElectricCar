@@ -31,66 +31,60 @@
             averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
             minLevel: 10 // 클러스터 할 최소 지도 레벨
         });
+        //MARKER IMAGE,COLOR
+        var blueMarkerImage = new kakao.maps.MarkerImage(
+            'https://cdn-icons-png.flaticon.com/512/8012/8012565.png',
+            new kakao.maps.Size(40, 41),
+            { offset: new kakao.maps.Point(13, 37), alt: '파란색 마커' }
+        );
 
-        //------------hover---
-        // $.get("http://localhost:5556/api/data", function (data) {
-        //     // 데이터에서 좌표 값을 가지고 마커를 표시합니다
-        //     // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
-        //     var markers = $(data.chargespot).map(function (i, chargespot) {
-        //         console.log(chargespot.csNm);
-        //         return new kakao.maps.Marker({
-        //             map: map,
-        //             position: new kakao.maps.LatLng(chargespot.lat, chargespot.longi),
-        //             title: chargespot.csNm
-        //         });
-        //     });
-
-        //     // 클러스터러에 마커들을 추가합니다
-        //     clusterer.addMarkers(markers);
-        // });
-
-
-
+        // 붉은색 마커 이미지
+        var greenMarkerImage = new kakao.maps.MarkerImage(
+            'https://cdn-icons-png.flaticon.com/512/1170/1170949.png',
+            new kakao.maps.Size(40, 41),
+            { offset: new kakao.maps.Point(13, 37), alt: '붉은색 마커' }
+        );
 
 
         $.get("http://localhost:5556/api/data", function (data) {
+            var infowindow = new kakao.maps.InfoWindow({
+                removable: true // 닫기 버튼 추가
+            });
             // 데이터에서 좌표 값을 가지고 마커를 표시합니다
             // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
             var markers = $(data.chargespot).map(function (i, chargespot) {
                 console.log(chargespot.csNm);
+
                 var marker = new kakao.maps.Marker({
                     position: new kakao.maps.LatLng(chargespot.lat, chargespot.longi),
                     // 마커 클릭 시 인포윈도우가 표시됩니다
                     clickable: true
                 });
 
-                // 인포윈도우를 생성합니다
-                var infowindow = new kakao.maps.InfoWindow({
-                    // content: '<div style="padding:5px; color:black;border: solid; border-radius:23px; text-align:center;"><div>' + chargespot.csNm + '</div> <div>aaa</div><div>',
-                    content: '<div class="infocssreset"><span style="display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span></div></div>',
-                    removable: true // 닫기 버튼 추가
-
-                });
-
                 // 마커와 인포윈도우를 연결합니다
                 kakao.maps.event.addListener(marker, 'click', function () {
-
-                    //인포윈도우 실행
+                    // InfoWindow에 마커 정보 추가
+                    infowindow.setContent('<div class="infocssreset"><span style="display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span></div></div>');
+                    // 마커와 연결된 InfoWindow 열기
                     infowindow.open(map, marker);
                     setInfoWindowStyle();
-
+                    marker.setImage(greenMarkerImage);
+                    // 선택되지 않은 마커들의 아이콘을 파란색으로 변경
+                    for (var i = 0; i < markers.length; i++) {
+                        if (markers[i] !== marker) {
+                            markers[i].setImage(blueMarkerImage);
+                        }
+                    }
                 });
-                // 마커가 아닌 곳 클릭 시 인포윈도우 닫기
-                kakao.maps.event.addListener(map, 'click', function () {
-                    infowindow.close();
-                });
-
                 return marker;
             });
-
-
+            //시작 시 모든마커 초기화 파란 아이콘
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setImage(blueMarkerImage);
+            }
             // 클러스터러에 마커들을 추가합니다
             clusterer.addMarkers(markers);
+            console.log(markers);
 
         });
         //기본 INFOWINDOW 스타일 수정 
