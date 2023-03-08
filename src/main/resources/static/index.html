@@ -8,9 +8,15 @@
 </head>
 
 <body>
-    <nav></nav>
-    <div class="top">전기차 충전소 알림이</div>
-    <div class="search">검색</div>
+    <header class="topbar">
+        <div>전기차 충전소</div>
+        <span style=" margin-right: 0%;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    </header>
+    <div style="z-index: 22;" id="mySidenav" class="sidenav">
+        <input class="search" type="search" />
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    </div>
+
     <div id="map" class="map">s</div>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91eefef9b13e2347ca422a034ce90f43&libraries=clusterer"></script>
@@ -18,7 +24,15 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.js"
         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-
+    <script>
+        //nav on,off
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
     <script>
         var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
             center: new kakao.maps.LatLng(36.9921075, 127.1129451), // 지도의 중심좌표
@@ -64,7 +78,7 @@
                 // 마커와 인포윈도우를 연결합니다
                 kakao.maps.event.addListener(marker, 'click', function () {
                     // InfoWindow에 마커 정보 추가
-                    infowindow.setContent('<div class="infocssreset"><span style="display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span></div></div>');
+                    infowindow.setContent('<div class="infocssreset"><span style="z-index:55;display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span></div></div>');
                     // 마커와 연결된 InfoWindow 열기
                     infowindow.open(map, marker);
                     setInfoWindowStyle();
@@ -75,6 +89,7 @@
                             markers[i].setImage(blueMarkerImage);
                         }
                     }
+                    // openNav();
                 });
                 return marker;
             });
@@ -91,8 +106,9 @@
         function setInfoWindowStyle() {
             var infoTitle = document.querySelectorAll('.infocssreset');
             infoTitle.forEach(function (e) {
-                let w = 200;
+                let w = 220;
                 var ml = w / 2;
+                e.parentElement.style.zIndex = "55";
                 e.parentElement.style.bottom = "50px";
                 e.parentElement.style.left = "50%";
                 e.parentElement.style.marginLeft = -ml + "px";
