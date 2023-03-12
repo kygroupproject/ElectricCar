@@ -61,10 +61,11 @@ public class RestController {
                 JSONObject object = new JSONObject();
 //                System.out.println("========================" + i + "===========================");
                 JSONObject ecCar = (JSONObject) parse_listArr.get(i);
-                object.put("csId", ecCar.get("csId"));
+//                object.put("csId", ecCar.get("csId"));
                 object.put("csNm", ecCar.get("csNm"));
                 object.put("lat", ecCar.get("lat"));
                 object.put("longi", ecCar.get("longi"));
+                object.put("addr", ecCar.get("addr"));
 
                 data.add(object);
 

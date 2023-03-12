@@ -13,8 +13,21 @@
         <span style=" margin-right: 0%;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
     </header>
     <div style="z-index: 22;" id="mySidenav" class="sidenav">
-        <input class="search" type="search" />
+        <input id="searchname" class="search" type="search" />
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div id="searchdata">
+            <div id="addr"></div>
+            <div id="chargeTp"></div>
+            <div id="cpId"></div>
+            <div id="cpNm"></div>
+            <div id="cpStat"></div>
+            <div id="cpTp"></div>
+            <div id="csId"></div>
+            <div id="csNm"></div>
+            <div id="lat"></div>
+            <div id="longi"></div>
+            <div id="statUpdatetime"></div>
+        </div>
     </div>
 
     <div id="map" class="map">s</div>
@@ -32,6 +45,26 @@
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
         }
+
+        // var input = document.getElementById("searchname");
+        // input.addEventListener("input", function (e) {
+        //     console.log("oninput", e.target.value); // 값이 바뀔때마다 찍힘
+        // })
+        // function clicksearch(target) {
+        //     var searchtext = target.value;
+        //     console.log(searchtext);
+        //     $.ajax({
+        //         method: 'GET',                             // HTTP 요청 방식(GET, POST)
+        //         url: 'http://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?page=1&perPage=10&returnType=json&cond%5Baddr%3A%3ALIKE%5D=' + searchtext + '&serviceKey=FhXGRAzLpXSqfjaH9Pho%2BKNJ6g5937mSFmDQakHusvkBJd65CfTeyExGHTdH7g3J5GrDEPfBTLVlv6uRjhBNeQ%3D%3D',   // 서버의 URL 주소
+        //         dataType: 'json'                             // 서버에서 보내줄 데이터의 타입
+        //     }).done(function (data) {       // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
+        //         console.log(data);
+        //         $.each(data, function (i, item) {  //each(매개변수, 함수)
+        //             $('#searchdata').append(`<p>${item.addr}</p><p>${item.chargeTp}</p><p>${item.cpId}</p><p>${item.cpNm}</p><p>${item.cpStat}</p><p>${item.cpTp}</p><p>${item.csId}</p><p>${item.csNm}</p><p>${item.lat}</p><p>${item.longi}</p><p>${item.statUpdatetime}</p>`)
+        //         });
+        //     });
+
+        // }
     </script>
     <script>
         var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
@@ -81,6 +114,30 @@
                     infowindow.setContent('<div class="infocssreset"><span style="z-index:55;display: block;background: #50627F;color: #fff;text-align: center;height: 24px;line-height:22px;border-radius:4px;padding:0px 10px;">' + chargespot.csNm + '</span></div></div>');
                     // 마커와 연결된 InfoWindow 열기
                     infowindow.open(map, marker);
+                    openNav();
+
+                    //마커 클릭 시 검색창에 textchange
+                    document.getElementById("searchname").value = chargespot.csNm;
+                    $.ajax({
+                        method: 'GET',                             // HTTP 요청 방식(GET, POST)
+                        url: 'http://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?page=1&perPage=10&returnType=json&cond%5Baddr%3A%3ALIKE%5D=' + chargespot.addr + '&serviceKey=FhXGRAzLpXSqfjaH9Pho%2BKNJ6g5937mSFmDQakHusvkBJd65CfTeyExGHTdH7g3J5GrDEPfBTLVlv6uRjhBNeQ%3D%3D',   // 서버의 URL 주소
+                        dataType: 'json'                             // 서버에서 보내줄 데이터의 타입
+                    }).done(function (data) {       // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
+                        console.log(data);
+                        $.each(data.data, function (i, item) {
+                            $('#addr').text(item.addr);
+                            $('#chargeTp').text(item.chargeTp);
+                            $('#cpId').text(item.cpId);
+                            $('#cpNm').text(item.cpNm);
+                            $('#cpStat').text(item.cpStat);
+                            $('#cpTp').text(item.cpTp);
+                            $('#csId').text(item.csId);
+                            $('#csNm').text(item.csNm);
+                            $('#lat').text(item.lat);
+                            $('#longi').text(item.longi);
+                            $('#statUpdatetime').text(item.statUpdatetime);
+                        });
+                    });
                     setInfoWindowStyle();
                     marker.setImage(greenMarkerImage);
                     // 선택되지 않은 마커들의 아이콘을 파란색으로 변경
