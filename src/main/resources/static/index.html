@@ -12,12 +12,16 @@
         <div>전기차 충전소</div>
         <span style=" margin-right: 0%;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
     </header>
+
     <div style="z-index: 22;" id="mySidenav" class="sidenav">
-        <input id="searchname" class="search" type="search" />
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
         <div id="searchdata">
+            <div style="background-color: white; padding: 10px;">
+                <input id="searchname" class="search" type="search" />
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div id="chargeTp"><span id="speedcharge"></span><span id="chargeTptext"></span></div>
+            </div>
             <div id="addr"></div>
-            <div id="chargeTp"></div>
             <div id="cpId"></div>
             <div id="cpNm"></div>
             <div id="cpStat"></div>
@@ -27,9 +31,18 @@
             <div id="lat"></div>
             <div id="longi"></div>
             <div id="statUpdatetime"></div>
+            <div style="background-color: white; padding: 10px;">
+                충전기 현황
+                <div id="speed">
+                    <ul></ul>
+                </div>
+                <div id="slow">
+                    <ul></ul>
+                </div>
+            </div>
         </div>
     </div>
-
+    </div>
     <div id="map" class="map">s</div>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91eefef9b13e2347ca422a034ce90f43&libraries=clusterer"></script>
@@ -40,33 +53,23 @@
     <script>
         //nav on,off
         function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("mySidenav").style.width = "384.8px";
+            document.getElementById("mySidenav").style.paddingTop = "50px";
+            document.getElementById("mySidenav").style.paddingRight = "5px";
+            document.getElementById("mySidenav").style.paddingBottom = "14px";
+            document.getElementById("mySidenav").style.paddingLeft = "5px";
         }
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("mySidenav").style.paddingTop = "0px";
+            document.getElementById("mySidenav").style.paddingRight = "0px";
+            document.getElementById("mySidenav").style.paddingBottom = "0px";
+            document.getElementById("mySidenav").style.paddingLeft = "0px";
         }
 
-        // var input = document.getElementById("searchname");
-        // input.addEventListener("input", function (e) {
-        //     console.log("oninput", e.target.value); // 값이 바뀔때마다 찍힘
-        // })
-        // function clicksearch(target) {
-        //     var searchtext = target.value;
-        //     console.log(searchtext);
-        //     $.ajax({
-        //         method: 'GET',                             // HTTP 요청 방식(GET, POST)
-        //         url: 'http://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?page=1&perPage=10&returnType=json&cond%5Baddr%3A%3ALIKE%5D=' + searchtext + '&serviceKey=FhXGRAzLpXSqfjaH9Pho%2BKNJ6g5937mSFmDQakHusvkBJd65CfTeyExGHTdH7g3J5GrDEPfBTLVlv6uRjhBNeQ%3D%3D',   // 서버의 URL 주소
-        //         dataType: 'json'                             // 서버에서 보내줄 데이터의 타입
-        //     }).done(function (data) {       // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
-        //         console.log(data);
-        //         $.each(data, function (i, item) {  //each(매개변수, 함수)
-        //             $('#searchdata').append(`<p>${item.addr}</p><p>${item.chargeTp}</p><p>${item.cpId}</p><p>${item.cpNm}</p><p>${item.cpStat}</p><p>${item.cpTp}</p><p>${item.csId}</p><p>${item.csNm}</p><p>${item.lat}</p><p>${item.longi}</p><p>${item.statUpdatetime}</p>`)
-        //         });
-        //     });
-
-        // }
     </script>
     <script>
+
         var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
             center: new kakao.maps.LatLng(36.9921075, 127.1129451), // 지도의 중심좌표
             level: 8 // 지도의 확대 레벨
@@ -115,18 +118,37 @@
                     // 마커와 연결된 InfoWindow 열기
                     infowindow.open(map, marker);
                     openNav();
-
+                    var slowChargeCount = 0;
+                    var fastChargeCount = 0;
                     //마커 클릭 시 검색창에 textchange
                     document.getElementById("searchname").value = chargespot.csNm;
+                    document.getElementById("searchname").style.fontWeight = "900";
                     $.ajax({
                         method: 'GET',                             // HTTP 요청 방식(GET, POST)
                         url: 'http://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?page=1&perPage=10&returnType=json&cond%5Baddr%3A%3ALIKE%5D=' + chargespot.addr + '&serviceKey=FhXGRAzLpXSqfjaH9Pho%2BKNJ6g5937mSFmDQakHusvkBJd65CfTeyExGHTdH7g3J5GrDEPfBTLVlv6uRjhBNeQ%3D%3D',   // 서버의 URL 주소
                         dataType: 'json'                             // 서버에서 보내줄 데이터의 타입
                     }).done(function (data) {       // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
                         console.log(data);
+                        var $speedList = $('#speed ul');
+                        var $slowList = $('#slow ul');
+                        $speedList.empty(); // clear
+                        $slowList.empty(); // clear
+
+
+
                         $.each(data.data, function (i, item) {
+
+
+
+                            if (item.chargeTp === "1") {
+                                slowChargeCount++;
+                                $slowList.append('<li>완속: ' + slowChargeCount + '</li>');
+                            } else if (item.chargeTp === "2") {
+                                fastChargeCount++;
+                                $speedList.append('<li>급속: ' + fastChargeCount + '</li>');
+                            }
                             $('#addr').text(item.addr);
-                            $('#chargeTp').text(item.chargeTp);
+                            // $('#chargeTptext').text(item.chargeTp);
                             $('#cpId').text(item.cpId);
                             $('#cpNm').text(item.cpNm);
                             $('#cpStat').text(item.cpStat);
@@ -137,6 +159,30 @@
                             $('#longi').text(item.longi);
                             $('#statUpdatetime').text(item.statUpdatetime);
                         });
+                        $('#speedcharge').html('&#128034; ' + '완속' + ' : ' + slowChargeCount + '개' + '⚡' + '급속' + ' : ' + fastChargeCount + '개');
+
+                        console.log(`Processing completed. 완속: ${slowChargeCount}개, 급속: ${fastChargeCount}개`);
+
+                        // $.each(data.data, function (i, item) {
+                        //     if (item.chargeTp === "1") {
+                        //         item.chargeTp = "완속";
+                        //         $('#speedcharge').html('&#128034;');
+                        //     } else if (item.chargeTp === "2") {
+                        //         item.chargeTp = "급속";
+                        //         $('#speedcharge').html('&#9889;');
+                        //     }
+                        //     $('#addr').text(item.addr);
+                        //     $('#chargeTptext').text(item.chargeTp);
+                        //     $('#cpId').text(item.cpId);
+                        //     $('#cpNm').text(item.cpNm);
+                        //     $('#cpStat').text(item.cpStat);
+                        //     $('#cpTp').text(item.cpTp);
+                        //     $('#csId').text(item.csId);
+                        //     $('#csNm').text(item.csNm);
+                        //     $('#lat').text(item.lat);
+                        //     $('#longi').text(item.longi);
+                        //     $('#statUpdatetime').text(item.statUpdatetime);
+                        // });
                     });
                     setInfoWindowStyle();
                     marker.setImage(greenMarkerImage);
