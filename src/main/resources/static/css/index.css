@@ -7,10 +7,13 @@
 .search {
     border-radius: 2px;
     border: inset;
-    border-color: #19cd60;
+    border-color: #cd1919;
     width: 100%;
     top: 15px;
-
+    /* font-weight: 900px; */
+    letter-spacing: -1px;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .map {
@@ -33,17 +36,19 @@
 
 /* SIDEBAR */
 .sidenav {
-    border: solid;
+    border: solid 3px;
+    border-radius: 3px;
+    border-color: #c4c6c8;
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
     right: 0;
-    background-color: #ffffff;
+    background-color: #e9ecef;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+
 }
 
 .sidenav a {
@@ -66,6 +71,56 @@
     font-size: 50px;
     margin-left: 50px;
 }
+
+#chargeTp {
+    font-size: 20px;
+    background-color: #F7FBFE;
+    text-align: center;
+}
+
+#speed {
+    /* margin: 5px;
+    border: solid 0.1px; */
+    border-radius: 3px;
+
+
+}
+
+#slow {
+    /* border: solid 0.1px; */
+    border-radius: 3px;
+
+}
+
+#chargebox {
+    border: solid 0.1px #818181;
+    width: 100%;
+
+}
+
+#sidefirstdiv {}
+
+ul {
+
+    padding-left: 0px;
+    list-style-type: none;
+    display: flex;
+}
+
+li {
+    list-style-type: none;
+    padding: 14px;
+    border-radius: 15px;
+    border: 1px solid;
+    width: 170.4px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 3%);
+    display: flex;
+    border-color: #3ba1ff;
+    text-align: center;
+    margin: 5px;
+    flex-direction: column;
+}
+
 
 @media screen and (max-height: 450px) {
     .sidenav {
