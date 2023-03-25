@@ -43,7 +43,14 @@
         </div>
     </div>
     </div>
-    <div id="map" class="map">s</div>
+    <div id="map" class="map">
+        <div id="searchbox">
+            <input id="inputsearch"
+                style="height: 28px;border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"
+                type="search" placeholder="Search" />
+            <button type="button" id="searchbutton" onclick="addrsearch()">&#128269;</button>
+        </div>
+    </div>
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91eefef9b13e2347ca422a034ce90f43&libraries=clusterer"></script>
 
@@ -66,10 +73,21 @@
             document.getElementById("mySidenav").style.paddingBottom = "0px";
             document.getElementById("mySidenav").style.paddingLeft = "0px";
         }
+        function addrsearch() {
 
+            var searchvalue = document.getElementById("inputsearch").value;
+            console.log(searchvalue);
+            $.ajax({
+                method: 'GET',                             // HTTP 요청 방식(GET, POST)
+                url: 'http://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?page=1&perPage=10&returnType=json&cond%5Baddr%3A%3ALIKE%5D=' + searchvalue + '&serviceKey=FhXGRAzLpXSqfjaH9Pho%2BKNJ6g5937mSFmDQakHusvkBJd65CfTeyExGHTdH7g3J5GrDEPfBTLVlv6uRjhBNeQ%3D%3D',   // 서버의 URL 주소
+                dataType: 'json'                             // 서버에서 보내줄 데이터의 타입
+            }).done(function (data) {       // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
+                console.log(data);
+
+            });
+        }
     </script>
     <script>
-
         var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
             center: new kakao.maps.LatLng(36.9921075, 127.1129451), // 지도의 중심좌표
             level: 8 // 지도의 확대 레벨
@@ -134,12 +152,7 @@
                         $speedList.empty(); // clear
                         $slowList.empty(); // clear
 
-
-
                         $.each(data.data, function (i, item) {
-
-
-
                             if (item.chargeTp === "1") {
                                 slowChargeCount++;
                                 $slowList.append('<li>완속: ' + slowChargeCount + '</li>');
@@ -162,28 +175,8 @@
                         $('#speedcharge').html('&#128034; ' + '완속' + ' : ' + slowChargeCount + '개' + '⚡' + '급속' + ' : ' + fastChargeCount + '개');
 
                         console.log(`Processing completed. 완속: ${slowChargeCount}개, 급속: ${fastChargeCount}개`);
-
-                        // $.each(data.data, function (i, item) {
-                        //     if (item.chargeTp === "1") {
-                        //         item.chargeTp = "완속";
-                        //         $('#speedcharge').html('&#128034;');
-                        //     } else if (item.chargeTp === "2") {
-                        //         item.chargeTp = "급속";
-                        //         $('#speedcharge').html('&#9889;');
-                        //     }
-                        //     $('#addr').text(item.addr);
-                        //     $('#chargeTptext').text(item.chargeTp);
-                        //     $('#cpId').text(item.cpId);
-                        //     $('#cpNm').text(item.cpNm);
-                        //     $('#cpStat').text(item.cpStat);
-                        //     $('#cpTp').text(item.cpTp);
-                        //     $('#csId').text(item.csId);
-                        //     $('#csNm').text(item.csNm);
-                        //     $('#lat').text(item.lat);
-                        //     $('#longi').text(item.longi);
-                        //     $('#statUpdatetime').text(item.statUpdatetime);
-                        // });
                     });
+
                     setInfoWindowStyle();
                     marker.setImage(greenMarkerImage);
                     // 선택되지 않은 마커들의 아이콘을 파란색으로 변경
@@ -193,6 +186,7 @@
                         }
                     }
                     // openNav();
+
                 });
                 return marker;
             });
@@ -203,6 +197,7 @@
             // 클러스터러에 마커들을 추가합니다
             clusterer.addMarkers(markers);
             console.log(markers);
+
 
         });
         //기본 INFOWINDOW 스타일 수정 
