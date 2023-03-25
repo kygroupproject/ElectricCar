@@ -113,7 +113,7 @@
             { offset: new kakao.maps.Point(13, 37), alt: '붉은색 마커' }
         );
 
-
+        var clickedMarker; // 이전에 클릭된 마커
         $.get("http://localhost:5556/api/data", function (data) {
             var infowindow = new kakao.maps.InfoWindow({
                 removable: true // 닫기 버튼 추가
@@ -178,14 +178,28 @@
                     });
 
                     setInfoWindowStyle();
-                    marker.setImage(greenMarkerImage);
+<!--                    marker.setImage(greenMarkerImage);-->
                     // 선택되지 않은 마커들의 아이콘을 파란색으로 변경
-                    for (var i = 0; i < markers.length; i++) {
-                        if (markers[i] !== marker) {
-                            markers[i].setImage(blueMarkerImage);
-                        }
-                    }
+<!--                    for (var i = 0; i < markers.length; i++) {-->
+<!--                        if (markers[i] !== marker) {-->
+<!--                            markers[i].setImage(blueMarkerImage);-->
+<!--                        }-->
+<!--                    }-->
                     // openNav();
+                     if (clickedMarker !== undefined && clickedMarker !== null) {
+                        clickedMarker.setImage(blueMarkerImage);
+                    }
+
+                    // 클릭된 마커 이미지 변경
+                    marker.setImage(greenMarkerImage);
+
+                    clickedMarker = marker; // 클릭된 마커 저장
+
+                    $('.closebtn').on('click', function() {
+                        test(markers);
+                        // closeNav();
+                        infowindow.close();
+                    });
 
                 });
                 return marker;
@@ -200,6 +214,13 @@
 
 
         });
+
+        function test(markers){
+            console.log(markers.length);
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setImage(blueMarkerImage);
+                }
+        }
         //기본 INFOWINDOW 스타일 수정 
         function setInfoWindowStyle() {
             var infoTitle = document.querySelectorAll('.infocssreset');
