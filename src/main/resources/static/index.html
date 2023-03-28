@@ -178,15 +178,17 @@
                     });
 
                     setInfoWindowStyle();
-<!--                    marker.setImage(greenMarkerImage);-->
+                    marker.setImage(greenMarkerImage);
                     // 선택되지 않은 마커들의 아이콘을 파란색으로 변경
-<!--                    for (var i = 0; i < markers.length; i++) {-->
-<!--                        if (markers[i] !== marker) {-->
-<!--                            markers[i].setImage(blueMarkerImage);-->
-<!--                        }-->
-<!--                    }-->
+                    for (var i = 0; i < markers.length; i++) {
+
+                        if (markers[i] !== marker) {
+
+                            markers[i].setImage(blueMarkerImage);
+                        }
+                    }
                     // openNav();
-                     if (clickedMarker !== undefined && clickedMarker !== null) {
+                    if (clickedMarker !== undefined && clickedMarker !== null) {
                         clickedMarker.setImage(blueMarkerImage);
                     }
 
@@ -195,7 +197,7 @@
 
                     clickedMarker = marker; // 클릭된 마커 저장
 
-                    $('.closebtn').on('click', function() {
+                    $('.closebtn').on('click', function () {
                         test(markers);
                         // closeNav();
                         infowindow.close();
@@ -215,11 +217,11 @@
 
         });
 
-        function test(markers){
+        function test(markers) {
             console.log(markers.length);
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setImage(blueMarkerImage);
-                }
+            }
         }
         //기본 INFOWINDOW 스타일 수정 
         function setInfoWindowStyle() {

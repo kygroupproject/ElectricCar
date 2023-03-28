@@ -54,24 +54,36 @@ public class RestController {
             JSONObject obj = (JSONObject) parser.parse(result);
             JSONArray parse_listArr = (JSONArray) obj.get("data");
 
-
+//            int kk=0;
 
             for (int i = 0; i < parse_listArr.size(); i++) {
 
                 JSONObject object = new JSONObject();
-//                System.out.println("========================" + i + "===========================");
+
                 JSONObject ecCar = (JSONObject) parse_listArr.get(i);
-//                object.put("csId", ecCar.get("csId"));
-                object.put("csNm", ecCar.get("csNm"));
-                object.put("lat", ecCar.get("lat"));
-                object.put("longi", ecCar.get("longi"));
-                object.put("addr", ecCar.get("addr"));
 
-                data.add(object);
-
-
+                if(i==0){
+                    object.put("csNm", ecCar.get("csNm"));
+                    object.put("lat", ecCar.get("lat"));
+                    object.put("longi", ecCar.get("longi"));
+                    object.put("addr", ecCar.get("addr"));
+                    data.add(object);
+                }else{
+                    JSONObject ecCar2 = (JSONObject) parse_listArr.get(i-1);
+//                    System.out.println(ecCar.get("csNm")+" "+ecCar2.get("csNm"));
+                    if(ecCar.get("csNm").equals(ecCar2.get("csNm"))){
+//                        System.out.println("==당첨==");
+                    }else{
+                        object.put("csNm", ecCar.get("csNm"));
+                        object.put("lat", ecCar.get("lat"));
+                        object.put("longi", ecCar.get("longi"));
+                        object.put("addr", ecCar.get("addr"));
+                        data.add(object);
+//                        kk=kk+1;
+                    }
+                }
             }
-
+//            System.out.println(kk);
 
             torres.put("chargespot",data);
 
