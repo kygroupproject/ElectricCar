@@ -82,7 +82,19 @@
                 url: 'http://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList?page=1&perPage=10&returnType=json&cond%5Baddr%3A%3ALIKE%5D=' + searchvalue + '&serviceKey=FhXGRAzLpXSqfjaH9Pho%2BKNJ6g5937mSFmDQakHusvkBJd65CfTeyExGHTdH7g3J5GrDEPfBTLVlv6uRjhBNeQ%3D%3D',   // 서버의 URL 주소
                 dataType: 'json'                             // 서버에서 보내줄 데이터의 타입
             }).done(function (data) {       // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨.
-                console.log(data);
+                console.log(data.data);
+                var infowindow = new kakao.maps.InfoWindow({
+                    removable: true // 닫기 버튼 추가
+                });
+                // var markers = $(data.chargespot).map(function (i, chargespot) {
+                //     console.log(chargespot.csNm);
+
+                //     var marker = new kakao.maps.Marker({
+                //         position: new kakao.maps.LatLng(chargespot.lat, chargespot.longi),
+                //         // 마커 클릭 시 인포윈도우가 표시됩니다
+                //         clickable: true
+                //     });
+                // });
 
             });
         }
