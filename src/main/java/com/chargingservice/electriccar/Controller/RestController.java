@@ -4,19 +4,22 @@ package com.chargingservice.electriccar.Controller;
 import com.chargingservice.electriccar.DTO.ApiDto;
 
 
+import lombok.Getter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,17 +30,31 @@ import java.util.Map;
 @RequestMapping("/api")
 public class RestController {
 
-    @GetMapping("/data")
-    public static JSONObject ApiData() {
+    @GetMapping(value = {"/data/{search}", "/data"})
+//    @ResponseBody
+    public static JSONObject ApiData(@PathVariable(required = false) String search) {
         JSONArray data = new JSONArray();
         JSONObject torres = new JSONObject();
+        System.out.println("==========================="+search);
         try {
+
+            if (search != null) {
+            } else {
+                search="";
+            }
+//            URLDecoder.decode((URLDecoder.decode(search, "8859_1")), "UTF-8"); //방법1
+//            new String(search.getBytes("8859_1"), "utf-8"); //방법2
             String serviceKey = "FhXGRAzLpXSqfjaH9Pho%2BKNJ6g5937mSFmDQakHusvkBJd65CfTeyExGHTdH7g3J5GrDEPfBTLVlv6uRjhBNeQ%3D%3D";
             String url = "http://api.odcloud.kr/api/EvInfoServiceV2/v1/getEvSearchList";
             url += "?" + URLEncoder.encode("page", "UTF-8") + "=1";
             url += "&" + URLEncoder.encode("perPage", "UTF-8") + "=4000";
+            url += "&" + URLEncoder.encode("returnType", "UTF-8") + "=json";
+            url += "&" + URLEncoder.encode("cond[addr::LIKE]","UTF-8")+"="+ search;
             url += "&" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey;
+
+//            String testurl=URLEncoder.encode(url,"UTF-8");
             URL url1 = new URL(url);
+
             System.out.println(url1);
             String line = "";
             String result = "";
