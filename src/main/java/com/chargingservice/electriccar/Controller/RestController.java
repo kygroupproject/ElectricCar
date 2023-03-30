@@ -39,6 +39,10 @@ public class RestController {
         try {
 
             if (search != null) {
+                URLDecoder.decode((URLDecoder.decode(search, "8859_1")), "UTF-8"); //방법1
+                System.out.println("1"+search);
+                new String(search.getBytes("8859_1"), "utf-8"); //방법2
+                System.out.println("2"+search);
             } else {
                 search="";
             }
@@ -49,7 +53,7 @@ public class RestController {
             url += "?" + URLEncoder.encode("page", "UTF-8") + "=1";
             url += "&" + URLEncoder.encode("perPage", "UTF-8") + "=4000";
             url += "&" + URLEncoder.encode("returnType", "UTF-8") + "=json";
-            url += "&" + URLEncoder.encode("cond[addr::LIKE]","UTF-8")+"="+ search;
+            url += "&" + URLEncoder.encode("cond[addr::LIKE]","UTF-8")+"="+ URLEncoder.encode(search,"UTF-8");
             url += "&" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey;
 
 //            String testurl=URLEncoder.encode(url,"UTF-8");
