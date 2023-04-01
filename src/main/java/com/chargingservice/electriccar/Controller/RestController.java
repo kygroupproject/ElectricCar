@@ -88,7 +88,7 @@ public class RestController {
 //                    System.out.println("==위도=="+ecCar.get("lat")+" "+ecCar2.get("lat")+"==경도=="+ecCar.get("longi")+""+ecCar2.get("longi"));
                     //위경도 값 같을 시 마커1개만 출력
                     if(ecCar.get("lat").equals(ecCar2.get("lat")) && ecCar.get("longi").equals(ecCar2.get("longi"))) {
-                        System.out.println("==당첨==");
+//                        System.out.println("==당첨==");
                     }else{
                         object.put("csNm", ecCar.get("csNm"));
                         object.put("lat", ecCar.get("lat"));
