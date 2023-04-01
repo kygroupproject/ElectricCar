@@ -8,76 +8,76 @@
 </head>
 
 <body>
-    <header class="topbar">
-        <div>전기차 충전소</div>
-        <!-- <span style=" margin-right: 0%;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span> -->
-    </header>
+<header class="topbar">
+    <div>전기차 충전소</div>
+    <!-- <span style=" margin-right: 0%;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span> -->
+</header>
 
-    <div style="z-index: 22;" id="mySidenav" class="sidenav">
+<div style="z-index: 22;" id="mySidenav" class="sidenav">
 
-        <div id="searchdata">
-            <div style="background-color: white; padding: 10px;">
-                <input id="searchname" class="search" type="search" readonly />
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <div id="chargeTp"><span id="speedcharge"></span><span id="chargeTptext"></span></div>
+    <div id="searchdata">
+        <div style="background-color: white; padding: 10px;">
+            <input id="searchname" class="search" type="search" readonly />
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div id="chargeTp"><span id="speedcharge"></span><span id="chargeTptext"></span></div>
+        </div>
+        <div style="background-color: white; padding: 10px; margin-top: 6px;">
+            <div id="addr"></div>
+        </div>
+        <div style="background-color: white; padding: 10px; margin-top: 6px;">
+            <div>1:B타입(5핀)</div>
+            <div>2: C타입(5핀)</div>
+            <div>3:BC타입(5핀)</div>
+            <div>4: BC타입(7핀)</div>
+            <div>5: DC차 데모</div>
+            <div>6:AC 3상</div>
+            <div>7: DC콤보</div>
+            <div>8: DC차데모+DC콤보</div>
+            <div>9:DC차데모+AC3상</div>
+            <div>10: DC차데모+DC콤보, AC3상</div>
+        </div>
+        <div id="cpId"></div>
+        <div id="cpNm"></div>
+        <div id="cpStat"></div>
+        <div id="cpTp"></div>
+        <div id="csId"></div>
+        <div id="csNm"></div>
+        <div id="lat"></div>
+        <div id="longi"></div>
+        <div id="statUpdatetime"></div>
+        <div style="background-color: white; padding: 10px; text-align:center">
+            충전기 현황
+            <div id="speed">
+                <ul></ul>
             </div>
-            <div style="background-color: white; padding: 10px; margin-top: 6px;">
-                <div id="addr"></div>
-            </div>
-            <div style="background-color: white; padding: 10px; margin-top: 6px;">
-                <div>1:B타입(5핀)</div>
-                <div>2: C타입(5핀)</div>
-                <div>3:BC타입(5핀)</div>
-                <div>4: BC타입(7핀)</div>
-                <div>5: DC차 데모</div>
-                <div>6:AC 3상</div>
-                <div>7: DC콤보</div>
-                <div>8: DC차데모+DC콤보</div>
-                <div>9:DC차데모+AC3상</div>
-                <div>10: DC차데모+DC콤보, AC3상</div>
-            </div>
-            <div id="cpId"></div>
-            <div id="cpNm"></div>
-            <div id="cpStat"></div>
-            <div id="cpTp"></div>
-            <div id="csId"></div>
-            <div id="csNm"></div>
-            <div id="lat"></div>
-            <div id="longi"></div>
-            <div id="statUpdatetime"></div>
-            <div style="background-color: white; padding: 10px; text-align:center">
-                충전기 현황
-                <div id="speed">
-                    <ul></ul>
-                </div>
-                <div id="slow">
-                    <ul></ul>
-                </div>
+            <div id="slow">
+                <ul></ul>
             </div>
         </div>
     </div>
-    </div>
-    <div id="map" class="map">
-        <div id="searchbox">
-            <input id="inputsearch"
-                style="height: 28px;border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"
-                type="search" placeholder="Search" />
-            <button style="
+</div>
+</div>
+<div id="map" class="map">
+    <div id="searchbox">
+        <input id="inputsearch"
+               style="height: 28px;border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"
+               type="search" placeholder="Search" />
+        <button style="
                 border: 0;
   background-color: transparent;" type="button" id="searchbutton" onclick="RealSearch()">&#128269;</button>
-        </div>
     </div>
-    <script type="text/javascript"
+</div>
+<script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91eefef9b13e2347ca422a034ce90f43&libraries=clusterer"></script>
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.js"
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    <script>
+<script>
         //nav on,off
         window.onload = function () {
             console.log("first road");
-            RealSearch();
+            // RealSearch();
         }
         function openNav() {
             document.getElementById("mySidenav").style.width = "384.8px";
@@ -117,18 +117,30 @@
             // });
         // }
     </script>
-    <script>
-        var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-            center: new kakao.maps.LatLng(36.9921075, 127.1129451), // 지도의 중심좌표
-            level: 8 // 지도의 확대 레벨
+<script>
+        var map;
+        var clusterer;
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude; // 위도
+            var longitude = position.coords.longitude; // 경도
+            console.log('실행')
+            geolocationPosition(latitude, longitude)
         });
 
-        // 마커 클러스터러를 생성합니다
-        var clusterer = new kakao.maps.MarkerClusterer({
-            map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-            averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-            minLevel: 10 // 클러스터 할 최소 지도 레벨
-        });
+
+        function geolocationPosition(latitude, longitude){
+            map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+                center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+                level: 8 // 지도의 확대 레벨
+            });
+            clusterer = new kakao.maps.MarkerClusterer({
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+                minLevel: 10 // 클러스터 할 최소 지도 레벨
+            });
+            // clusterer.clear();
+        RealSearch();
+        }
         //MARKER IMAGE,COLOR
         var blueMarkerImage = new kakao.maps.MarkerImage(
             'https://cdn-icons-png.flaticon.com/512/8012/8012565.png',
@@ -250,9 +262,10 @@
 
                             clickedMarker = marker; // 클릭된 마커 저장
 
-                            $('.closebtn').on('click', function () {
-                                test(markers);
-                                // closeNav();
+                            $('.closebtn').off('click').on('click', function () {
+                                for (var i = 0; i < markers.length; i++) {
+                                    markers[i].setImage(blueMarkerImage);
+                                }
                                 infowindow.close();
                             });
 
@@ -282,7 +295,7 @@
                 markers[i].setImage(blueMarkerImage);
             }
         }
-        //기본 INFOWINDOW 스타일 수정 
+        //기본 INFOWINDOW 스타일 수정
         function setInfoWindowStyle() {
             var infoTitle = document.querySelectorAll('.infocssreset');
             infoTitle.forEach(function (e) {
