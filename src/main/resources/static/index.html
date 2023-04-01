@@ -10,7 +10,7 @@
 <body>
     <header class="topbar">
         <div>전기차 충전소</div>
-        <span style=" margin-right: 0%;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+        <!-- <span style=" margin-right: 0%;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span> -->
     </header>
 
     <div style="z-index: 22;" id="mySidenav" class="sidenav">
@@ -48,7 +48,9 @@
             <input id="inputsearch"
                 style="height: 28px;border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;"
                 type="search" placeholder="Search" />
-            <button type="button" id="searchbutton" onclick="RealSearch()">&#128269;</button>
+            <button style="
+                border: 0;
+  background-color: transparent;" type="button" id="searchbutton" onclick="RealSearch()">&#128269;</button>
         </div>
     </div>
     <script type="text/javascript"
@@ -135,6 +137,9 @@
             // for (var i = 0; i < markers.length; i++) {
             //     markers[i].setMap(null);
             // }
+            clusterer.clear();
+            closeNav();
+
             var searchvalue = document.getElementById("inputsearch").value;
             console.log(searchvalue);
             $.ajax({
@@ -159,6 +164,8 @@
                             // 마커 클릭 시 인포윈도우가 표시됩니다
                             clickable: true
                         });
+
+
 
                         // 마커와 인포윈도우를 연결합니다
                         kakao.maps.event.addListener(marker, 'click', function () {

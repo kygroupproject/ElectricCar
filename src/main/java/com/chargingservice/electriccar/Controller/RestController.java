@@ -37,7 +37,6 @@ public class RestController {
         JSONObject torres = new JSONObject();
         System.out.println("==========================="+search);
         try {
-
             if (search != null) {
                 URLDecoder.decode((URLDecoder.decode(search, "8859_1")), "UTF-8"); //방법1
                 System.out.println("1"+search);
@@ -55,18 +54,13 @@ public class RestController {
             url += "&" + URLEncoder.encode("returnType", "UTF-8") + "=json";
             url += "&" + URLEncoder.encode("cond[addr::LIKE]","UTF-8")+"="+ URLEncoder.encode(search,"UTF-8");
             url += "&" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey;
-
-//            String testurl=URLEncoder.encode(url,"UTF-8");
             URL url1 = new URL(url);
-
             System.out.println(url1);
             String line = "";
             String result = "";
-
             BufferedReader br;
             br = new BufferedReader(new InputStreamReader(url1.openStream()));
             while ((line = br.readLine()) != null) {
-
                 result = result.concat(line);
 //            System.out.println(line);
             }
@@ -75,7 +69,7 @@ public class RestController {
             JSONObject obj = (JSONObject) parser.parse(result);
             JSONArray parse_listArr = (JSONArray) obj.get("data");
 
-//            int kk=0;
+            int kk=0;
 
             for (int i = 0; i < parse_listArr.size(); i++) {
 
@@ -91,25 +85,23 @@ public class RestController {
                     data.add(object);
                 }else{
                     JSONObject ecCar2 = (JSONObject) parse_listArr.get(i-1);
-//                    System.out.println(ecCar.get("csNm")+" "+ecCar2.get("csNm"));
-                    if(ecCar.get("csNm").equals(ecCar2.get("csNm"))){
-//                        System.out.println("==당첨==");
+//                    System.out.println("==위도=="+ecCar.get("lat")+" "+ecCar2.get("lat")+"==경도=="+ecCar.get("longi")+""+ecCar2.get("longi"));
+                    //위경도 값 같을 시 마커1개만 출력
+                    if(ecCar.get("lat").equals(ecCar2.get("lat")) && ecCar.get("longi").equals(ecCar2.get("longi"))) {
+                        System.out.println("==당첨==");
                     }else{
                         object.put("csNm", ecCar.get("csNm"));
                         object.put("lat", ecCar.get("lat"));
                         object.put("longi", ecCar.get("longi"));
                         object.put("addr", ecCar.get("addr"));
                         data.add(object);
-//                        kk=kk+1;
+                        kk=kk+1;
                     }
                 }
             }
-//            System.out.println(kk);
-
+            System.out.println(kk);
             torres.put("chargespot",data);
-
             br.close();
-
 
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
