@@ -17,11 +17,25 @@
 
         <div id="searchdata">
             <div style="background-color: white; padding: 10px;">
-                <input id="searchname" class="search" type="search" />
+                <input id="searchname" class="search" type="search" readonly />
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <div id="chargeTp"><span id="speedcharge"></span><span id="chargeTptext"></span></div>
             </div>
-            <div id="addr"></div>
+            <div style="background-color: white; padding: 10px; margin-top: 6px;">
+                <div id="addr"></div>
+            </div>
+            <div style="background-color: white; padding: 10px; margin-top: 6px;">
+                <div>1:B타입(5핀)</div>
+                <div>2: C타입(5핀)</div>
+                <div>3:BC타입(5핀)</div>
+                <div>4: BC타입(7핀)</div>
+                <div>5: DC차 데모</div>
+                <div>6:AC 3상</div>
+                <div>7: DC콤보</div>
+                <div>8: DC차데모+DC콤보</div>
+                <div>9:DC차데모+AC3상</div>
+                <div>10: DC차데모+DC콤보, AC3상</div>
+            </div>
             <div id="cpId"></div>
             <div id="cpNm"></div>
             <div id="cpStat"></div>
@@ -31,7 +45,7 @@
             <div id="lat"></div>
             <div id="longi"></div>
             <div id="statUpdatetime"></div>
-            <div style="background-color: white; padding: 10px;">
+            <div style="background-color: white; padding: 10px; text-align:center">
                 충전기 현황
                 <div id="speed">
                     <ul></ul>
@@ -191,6 +205,7 @@
                                 $slowList.empty(); // clear
 
                                 $.each(data.data, function (i, item) {
+
                                     if (item.chargeTp === "1") {
                                         slowChargeCount++;
                                         $slowList.append('<li>완속: ' + slowChargeCount + '</li>');
@@ -202,13 +217,13 @@
                                     // $('#chargeTptext').text(item.chargeTp);
                                     $('#cpId').text(item.cpId);
                                     $('#cpNm').text(item.cpNm);
-                                    $('#cpStat').text(item.cpStat);
-                                    $('#cpTp').text(item.cpTp);
-                                    $('#csId').text(item.csId);
-                                    $('#csNm').text(item.csNm);
-                                    $('#lat').text(item.lat);
-                                    $('#longi').text(item.longi);
-                                    $('#statUpdatetime').text(item.statUpdatetime);
+                                    // $('#cpStat').text(item.cpStat);
+                                    // $('#cpTp').text(item.cpTp);
+                                    // $('#csId').text(item.csId);
+                                    // $('#csNm').text(item.csNm);
+                                    // $('#lat').text(item.lat);
+                                    // $('#longi').text(item.longi);
+                                    // $('#statUpdatetime').text(item.statUpdatetime);
                                 });
                                 $('#speedcharge').html('&#128034; ' + '완속' + ' : ' + slowChargeCount + '개' + '⚡' + '급속' + ' : ' + fastChargeCount + '개');
 
