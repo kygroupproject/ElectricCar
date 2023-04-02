@@ -48,16 +48,18 @@
     background-color: #e9ecef;
     overflow-x: hidden;
     transition: 0.5s;
+    margin-bottom: 50px;
 
 }
 
-.sidenav a {
+a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
-    display: block;
+    display: contents;
     transition: 0.3s;
+    position: fixed;
 }
 
 .sidenav a:hover {
@@ -66,8 +68,8 @@
 
 .sidenav .closebtn {
     position: absolute;
-    top: -25px;
-    left: -80px;
+    top: 30%;
+    left: -31%;
     font-size: 50px;
     margin-left: 50px;
 }
@@ -143,7 +145,7 @@ input::-webkit-search-results-decoration {
     text-align: right;
 }
 
-ul {
+/* ul {
 
     padding-left: 0px;
     list-style-type: none;
@@ -162,12 +164,112 @@ li {
     text-align: center;
     margin: 5px;
     flex-direction: column;
+} */
+
+
+@media screen and (max-width: 580px) {
+    body {
+        font-size: 16px;
+        line-height: 22px;
+    }
 }
+
+.wrapper {
+    margin: 0 auto;
+    padding: 40px;
+    max-width: 800px;
+}
+
+.table {
+    margin: 6px 0 40px 0;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: table;
+}
+
+@media screen and (max-width: 580px) {
+    .table {
+        display: block;
+    }
+}
+
+.row {
+    display: table-row;
+    background: #f6f6f6;
+}
+
+.row:nth-of-type(odd) {
+    background: #e9e9e9;
+}
+
+.row.header {
+    font-weight: 900;
+    color: #ffffff;
+    background: #ea6153;
+}
+
+.row.green {
+    background: #27ae60;
+}
+
+.row.blue {
+    background: #2980b9;
+}
+
+@media screen and (max-width: 580px) {
+    .row {
+        padding: 14px 0 7px;
+        display: block;
+    }
+
+    .row.header {
+        padding: 0;
+        height: 6px;
+    }
+
+    .row.header .cell {
+        display: none;
+    }
+
+    .row .cell {
+        margin-bottom: 10px;
+    }
+
+    .row .cell:before {
+        margin-bottom: 3px;
+        content: attr(data-title);
+        min-width: 98px;
+        font-size: 10px;
+        line-height: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #969696;
+        display: block;
+    }
+}
+
+.cell {
+    padding: 6px 12px;
+    display: table-cell;
+}
+
+@media screen and (max-width: 580px) {
+    .cell {
+        padding: 2px 16px;
+        display: block;
+    }
+}
+
+
+
+
+
 
 
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
+        padding-bottom: 15px;
     }
 
     .sidenav a {
