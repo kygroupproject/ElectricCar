@@ -19,7 +19,7 @@
 .map {
     color: blue;
     margin-top: 0px;
-    height: 700px;
+    height: 500px;
     width: 100%;
 }
 
@@ -265,7 +265,7 @@ li {
 
 
 
-
+/* 
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
@@ -275,4 +275,4 @@ li {
     .sidenav a {
         font-size: 18px;
     }
-}
+} */
